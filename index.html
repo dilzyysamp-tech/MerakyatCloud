@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aman Jiwoo Store Cloud</title>
+<style>
+:root {
+    --bg:#071225;
+    --text:#fff;
+    --subtext:rgba(255,255,255,0.7);
+    --card:rgba(255,255,255,0.06);
+    --border:rgba(255,255,255,0.1);
+    --blur-bg:rgba(255,255,255,0.08);
+    --button-blue:linear-gradient(135deg,#38b6ff,#547bff);
+}
+body.light {
+    --bg:#f5f5f5;
+    --text:#000;
+    --subtext:rgba(0,0,0,0.6);
+    --card:#fff;
+    --border:rgba(0,0,0,0.1);
+    --blur-bg:rgba(0,0,0,0.06);
+    --button-blue:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+body {margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);transition:.3s;}
+.container{width:92%;margin:auto;margin-top:25px;}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.avatar{width:55px;height:55px;border-radius:14px;background:linear-gradient(135deg,#3cb8ff,#725bff);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;}
+.title-area p{opacity:.8;}
+.btn-group{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+.btn{padding:12px 22px;background:var(--blur-bg);border-radius:22px;border:1px solid var(--border);color:var(--text);cursor:pointer;backdrop-filter:blur(8px);}
+.btn.blue{background:var(--button-blue);color:#fff;border:none;}
+.hero{margin-top:25px;background:var(--card);padding:25px;border-radius:20px;border:1px solid var(--border);}
+.hero h1 span.blue{color:#67e8f9;}
+.hero h1 span.purple{color:#9190ff;}
+.btn-large{width:100%;padding:14px;margin-top:15px;cursor:pointer;}
+.section-title{margin-top:40px;font-size:22px;font-weight:700;}
+.cards{display:grid;gap:18px;margin-top:15px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+.card{background:var(--card);border:1px solid var(--border);padding:20px;border-radius:18px;transition:.3s;}
+.card:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 15px 25px rgba(0,0,0,0.5);}
+.card-title span{font-weight:bold;font-size:18px;}
+.card-title small{margin-left:8px;font-size:12px;color:var(--subtext);}
+.price{font-size:20px;font-weight:bold;margin-top:5px;}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px;}
+.feat-box{background:var(--blur-bg);padding:12px;border-radius:12px;text-align:center;border:1px solid var(--border);}
+.order-btn{margin-top:12px;width:100%;padding:12px;border-radius:14px;text-align:center;background:var(--button-blue);color:#fff;cursor:pointer;font-weight:bold;}
+.promo{margin-top:20px;font-weight:bold;color:#ff6a00;}
+.admin-popup{position:fixed;bottom:25px;right:25px;width:280px;background:linear-gradient(135deg,rgba(56,182,255,0.1),rgba(84,123,255,0.1));backdrop-filter:blur(15px);border-radius:20px;border:1px solid rgba(255,255,255,0.15);box-shadow:0 10px 30px rgba(0,0,0,0.3);display:none;flex-direction:column;overflow:hidden;animation:slideUp .3s ease forwards;z-index:999;}
+.popup-header{padding:14px 16px;font-weight:bold;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.05);}
+.popup-header button{background:transparent;border:none;font-size:22px;cursor:pointer;color:var(--text);transition:.2s;}
+.popup-header button:hover{color:#67e8f9;}
+.popup-body{display:flex;flex-direction:column;gap:12px;padding:12px 16px;}
+.contact-item{display:flex;align-items:center;justify-content:center;padding:12px;border-radius:14px;background:rgba(255,255,255,0.08);text-decoration:none;color:var(--text);font-weight:600;transition:.2s;}
+.contact-item:hover{background:rgba(255,255,255,0.15);transform:translateY(-2px);}
+.payment-card {display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 12px;background:rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:transform .3s, background .3s;width:100px;position:relative;}
+.payment-card:hover {transform:translateY(-6px);background:rgba(255,255,255,0.15);}
+.payment-card span {margin-top:6px;font-weight:bold;}
+.copy-notif{position:absolute;top:-30px;background:#67e8f9;color:#fff;padding:4px 10px;border-radius:12px;font-size:12px;opacity:0;transition:opacity .3s;}
+.copy-notif.show{opacity:1;}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.music-player{position:fixed;bottom:25px;left:25px;width:70px;height:70px;background:rgba(255,255,255,0.08);backdrop-filter:blur(15px);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.15);box-shadow:0 10px 20px rgba(0,0,0,0.3);z-index:999;cursor:pointer;transition:.3s;}
+.music-player:hover{transform:scale(1.1);}
+.music-player button{background:var(--button-blue);border:none;color:#fff;border-radius:50%;width:50px;height:50px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;}
+.testimonials{display:flex;gap:16px;overflow-x:auto;padding-bottom:10px;margin-top:20px;}
+.testimonial-card{min-width:220px;background:var(--card);border-radius:16px;padding:20px;border:1px solid var(--border);flex-shrink:0;}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="avatar">AJ</div>
+    <div class="title-area">
+      <h1>Aman Jiwoo Store Cloud</h1>
+      <p>Fast • Secure • Professional Hosting</p>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <div class="btn" id="themeToggle">Light Mode</div>
+    <div class="btn blue">Cart</div>
+    <div class="btn" id="contactAdminBtn">📞 Kontak Admin</div>
+    <div class="btn" id="paymentBtn">💰 Metode Pembayaran</div>
+  </div>
+
+  <div class="hero">
+    <h1>Hosting <span class="blue">SAMP</span> & <span class="purple">Bot</span></h1>
+    <p>Infrastruktur cepat untuk server, bot, dan project profesional.</p>
+    <div class="btn-large btn blue" id="hostingSampBtn">Lihat Hosting SAMP</div>
+    <div class="btn-large btn" id="hostingBotBtn">Lihat Hosting Bot</div>
+  </div>
+
+  <div class="promo">
+    🔥 Diskon 50% untuk paket SAMP Premium! Berakhir dalam: <span id="countdown"></span>
+  </div> <h2 class="section-title">Paket Hosting SAMP</h2>
+  <div class="cards" id="sampCards">
+    <div class="card">
+      <div class="card-title"><span>SAMP Basic</span><small>Mulai dari</small></div>
+      <div class="price">Rp 5.000</div>
+      <small>Ideal untuk 10–50 pemain</small>
+      <div class="features">
+        <div class="feat-box">CPU 100%</div>
+        <div class="feat-box">RAM 15 GB</div>
+        <div class="feat-box">Disk 15 GB</div>
+      </div>
+      <div class="order-btn" data-paket="SAMP Basic" data-harga="Rp 5.000">Order Sekarang</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span>SAMP Medium</span><small>Mulai dari</small></div>
+      <div class="price">Rp 10.000</div>
+      <small>Ideal untuk 50–150 pemain</small>
+      <div class="features">
+        <div class="feat-box">CPU 150%</div>
+        <div class="feat-box">RAM 20 GB</div>
+        <div class="feat-box">Disk 20 GB</div>
+      </div>
+      <div class="order-btn" data-paket="SAMP Medium" data-harga="Rp 10.000">Order Sekarang</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span>SAMP Premium</span><small>Mulai dari</small></div>
+      <div class="price">Rp 20.000</div>
+      <small>Ideal untuk 150–500 pemain</small>
+      <div class="features">
+        <div class="feat-box">CPU 200%</div>
+        <div class="feat-box">RAM 40 GB</div>
+        <div class="feat-box">Disk 50 GB</div>
+      </div>
+      <div class="order-btn" data-paket="SAMP Premium" data-harga="Rp 20.000">Order Sekarang</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Paket Hosting Bot</h2>
+  <div class="cards" id="botCards">
+    <div class="card">
+      <div class="card-title"><span>Bot Basic</span><small>Mulai dari</small></div>
+      <div class="price">Rp 7.000</div>
+      <small>Ideal untuk bot kecil</small>
+      <div class="features">
+        <div class="feat-box">CPU 80%</div>
+        <div class="feat-box">RAM 10 GB</div>
+        <div class="feat-box">Disk 10 GB</div>
+      </div>
+      <div class="order-btn" data-paket="Bot Basic" data-harga="Rp 7.000">Order Sekarang</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span>Bot Medium</span><small>Mulai dari</small></div>
+      <div class="price">Rp 15.000</div>
+      <small>Ideal untuk bot menengah</small>
+      <div class="features">
+        <div class="feat-box">CPU 120%</div>
+        <div class="feat-box">RAM 25 GB</div>
+        <div class="feat-box">Disk 25 GB</div>
+      </div>
+      <div class="order-btn" data-paket="Bot Medium" data-harga="Rp 15.000">Order Sekarang</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span>Bot Premium</span><small>Mulai dari</small></div>
+      <div class="price">Rp 30.000</div>
+      <small>Ideal untuk bot besar</small>
+      <div class="features">
+        <div class="feat-box">CPU 200%</div>
+        <div class="feat-box">RAM 50 GB</div>
+        <div class="feat-box">Disk 100 GB</div>
+      </div>
+      <div class="order-btn" data-paket="Bot Premium" data-harga="Rp 30.000">Order Sekarang</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Apa Kata Mereka?</h2>
+  <div class="testimonials">
+    <div class="testimonial-card">"Server SAMP cepat banget, recommended!" - Andi</div>
+    <div class="testimonial-card">"Bot hosting stabil 24/7, puas!" - Rina</div>
+    <div class="testimonial-card">"Harga murah, kualitas top!" - Budi</div>
+  </div>
+</div>
+
+<!-- CONTACT ADMIN -->
+<div id="contactAdminBox" class="admin-popup">
+  <div class="popup-header">
+    <span>Kontak Admin</span>
+    <button id="closeContactBtn">&times;</button>
+  </div>
+  <div class="popup-body">
+    <a class="contact-item" href="https://wa.me/6281234567890" target="_blank">📞 WhatsApp</a>
+    <a class="contact-item" href="mailto:admin@amanjiwoo.com">✉ Email</a>
+  </div>
+</div>
+
+<!-- PAYMENT POPUP MODERN -->
+<div id="paymentBox" class="admin-popup">
+  <div class="popup-header">
+    <span>Metode Pembayaran</span>
+    <button id="closePaymentBtn">&times;</button>
+  </div>
+  <div class="popup-body" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <div class="payment-card" data-number="081234567890">
+      <div class="copy-notif">Disalin!</div>
+      <img src="https://seeklogo.com/images/D/dana-logo-1BC8D1A9A2-seeklogo.com.png" alt="Dana" style="width:50px;height:50px;">
+      <span>Dana</span>
+    </div>
+    <div class="payment-card" data-number="081234567890">
+      <div class="copy-notif">Disalin!</div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Gopay_logo.png" alt="GoPay" style="width:50px;height:50px;">
+      <span>GoPay</span>
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC PLAYER -->
+<div class="music-player" id="musicPlayer">
+    <button id="playPauseBtn">▶️</button>
+    <audio id="audioPlayer" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+</div>
+
+<script>
+// ORDER
+document.querySelectorAll(".order-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+        let paket=btn.dataset.paket;
+        let harga=btn.dataset.harga;
+        let msg=`Halo Admin, saya ingin order:\nPaket: ${paket}\nHarga: ${harga}`;
+        window.open("https://wa.me/6281234567890?text="+encodeURIComponent(msg));
+    });
+});
+
+// KONTAK ADMIN
+const contactBtn=document.getElementById("contactAdminBtn");
+const contactBox=document.getElementById("contactAdminBox");
+document.getElementById("closeContactBtn").onclick=()=>contactBox.style.display="none";
+contactBtn.onclick=()=>contactBox.style.display="flex";
+
+// PAYMENT
+const paymentBtn=document.getElementById("paymentBtn");
+const paymentBox=document.getElementById("paymentBox");
+document.getElementById("closePaymentBtn").onclick=()=>paymentBox.style.display="none";
+paymentBtn.onclick=()=>paymentBox.style.display="flex";
+
+// COPY PAYMENT NUMBER
+document.querySelectorAll(".payment-card").forEach(card=>{
+    card.addEventListener("click",()=>{
+        let number=card.dataset.number;
+        navigator.clipboard.writeText(number);
+        let notif=card.querySelector(".copy-notif");
+        notif.classList.add("show");
+        setTimeout(()=>notif.classList.remove("show"),1500);
+    });
+});
+
+// THEME
+const toggle=document.getElementById("themeToggle");
+if(localStorage.getItem("theme")==="light") document.body.classList.add("light"),toggle.textContent="Dark Mode";
+toggle.onclick=()=>{
+    document.body.classList.toggle("light");
+    if(document.body.classList.contains("light")) localStorage.setItem("theme","light"),toggle.textContent="Dark Mode";
+    else localStorage.setItem("theme","dark"),toggle.textContent="Light Mode";
+};
+
+// COUNTDOWN
+let countdownDate=new Date();countdownDate.setDate(countdownDate.getDate()+2);
+setInterval(()=>{
+    let now=new Date().getTime();
+    let distance=countdownDate-now;
+    let d=Math.floor(distance/(1000*60*60*24));
+    let h=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+    let m=Math.floor((distance%(1000*60*60))/(1000*60));
+    let s=Math.floor((distance%(1000*60))/1000);
+    document.getElementById("countdown").textContent=`${d}d ${h}h ${m}m ${s}s`;
+},1000);
+
+// MUSIC PLAYER
+const audio=document.getElementById("audioPlayer");
+const playBtn=document.getElementById("playPauseBtn");
+playBtn.onclick=()=>{
+    if(audio.paused){audio.play();playBtn.textContent="⏸️";}
+    else{audio.pause();playBtn.textContent="▶️";}
+};
+
+// TOMBOL LIHAT HOSTING
+document.getElementById("hostingSampBtn").onclick=()=>window.location.href="hosting-samp.html";
+document.getElementById("hostingBotBtn").onclick=()=>window.location.href="hosting-bot.html";
+</script>
+</body>
+</html>
